@@ -8,7 +8,7 @@ public class TVInfo {
 	public static final int TV_MODLE_TYPE_DIGIT = 0X01;
 	public static final int TV_MODLE_TYPE_CMMB = 0X02;
 	public static final int TV_MODLE_TYPE_ISDB_T = 0X03;
-	public static final int TV_MODLE_TYPE_DVB_T3 = 0X04;
+	public static final int TV_MODLE_TYPE_DVB_T2 = 0X04;
 
 	public static final int IMAGE_FORMAT_PAL = 0X01;
 	public static final int IMAGE_FORMAT_NTSC = 0X02;

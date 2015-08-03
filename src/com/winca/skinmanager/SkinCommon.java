@@ -45,7 +45,9 @@ public class SkinCommon {
 	public static final String _COLOR = "color";
 	public static final String _DIMEN = "dimen";
 	public static final String _ARRAY = "array";
+	public static final String _STYLE = "style";
 	public static final String _XML = "xml";
+
 	private Context mContext;
 	private Context mSkinContext;
 	private String mSkinPackage;
@@ -57,6 +59,7 @@ public class SkinCommon {
 			String action = intent.getAction();
 			if (0 == action.compareTo(SKIN_CHANGE_ACTION)) {
 				System.exit(0);
+				unregisterStyleChange();
 			}
 		}
 	};
@@ -68,6 +71,7 @@ public class SkinCommon {
 		mSkinPackage = "com.winca.style.audiskin";
 		getSkinPackageNames();
 		createSkinContext(mSkinPackage);
+		unregisterStyleChange();
 		registerStyleChange();
 	}
 
@@ -344,6 +348,17 @@ public class SkinCommon {
 		return -1;
 	}
 
+	public int getSkinResStyleId(String styleName) {
+		if (mSkinContext == null) {
+			createSkinContext(mSkinPackage);
+		}
+		if (mSkinContext != null) {
+			return mSkinContext.getResources().getIdentifier(styleName, _STYLE,
+					mSkinPackage);
+		}
+		return -1;
+	}
+
 	public XmlResourceParser getSkinResXML(String xmlName) {
 		if (mSkinContext == null) {
 			createSkinContext(mSkinPackage);
@@ -391,21 +406,22 @@ public class SkinCommon {
 	}
 
 	public void registerStyleChange() {
-		//try {
-		//	if (mContext != null) {
-		//		IntentFilter filter = new IntentFilter(SKIN_CHANGE_ACTION);
-		//		mContext.registerReceiver(mReceiver, filter);
-		//	}
-		//} catch (Exception e) {
-		//	e.printStackTrace();
-		//}
+		try {
+			if (mContext != null) {
+				IntentFilter filter = new IntentFilter(SKIN_CHANGE_ACTION);
+				mContext.registerReceiver(mReceiver, filter);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void unregisterStyleChange() {
-		//try {
-		//	mContext.unregisterReceiver(mReceiver);
-		//} catch (Exception e) {
-		//	e.printStackTrace();
-		//}
+		try {
+			mContext.unregisterReceiver(mReceiver);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
